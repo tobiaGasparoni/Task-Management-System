@@ -39,12 +39,14 @@ pip install -r requirements.txt
 #### Create a user
 
 URL:
-```/auth/signup```
+```
+POST /auth/signup
+```
 
 Headers: 
 ```
 {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json"
 }
 ```
 
@@ -58,13 +60,73 @@ Request body:
 }
 ```
 
+Response:
+```
+{
+    "success": True
+}
+```
+
 #### Login
 
+This 
 
+URL:
+```
+POST /auth/login
+```
+
+Headers: 
+```
+{
+    "Content-Type": "application/json"
+}
+```
+
+Request body:
+```
+{
+    "email": "tobia.martinez@gmail.com",
+    "password": "password123again"
+}
+```
+
+Response:
+```
+{
+    "jwt": "xxxxx.yyyyy.zzzzz"
+}
+```
 
 #### Update user
 
+URL:
+```
+POST /auth/login
+```
 
+Headers: 
+```
+{
+    "Content-Type": "application/json",
+    "Authorization": "xxxxx.yyyyy.zzzzz"
+}
+```
+
+Request body:
+```
+{
+    "email": "tobia.martinez@gmail.com",
+    "password": "password123again"
+}
+```
+
+Response:
+```
+{
+    "jwt": "xxxxx.yyyyy.zzzzz"
+}
+```
 
 ### Tasks
 
