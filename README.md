@@ -36,6 +36,8 @@ pip install -r requirements.txt
 
 ### Authentication
 
+---
+
 #### Create a user
 
 This endpoint creates a user in the database.
@@ -138,6 +140,8 @@ Response:
 ```
 
 ### Tasks
+
+---
 
 #### Create a task
 
