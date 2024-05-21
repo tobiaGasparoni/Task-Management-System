@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, text
 def init_db():
     user = 'postgres'
     password = 'postgres'
-    host = 'localhost'
+    host = 'postgres'
     port = '5432'
     database = 'postgres'
     return create_engine(f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}", echo=True)

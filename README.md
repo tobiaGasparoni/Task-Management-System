@@ -141,19 +141,178 @@ Response:
 
 #### Create a task
 
+This endpoint creates a task for the logged in user.
 
+URL:
+```
+POST /tasks
+```
+
+Headers: 
+```
+{
+    "Content-Type": "application/json",
+    "Authorization": "xxxxx.yyyyy.zzzzz"
+}
+```
+
+Request body:
+```
+{
+    "title": "postman title",
+    "description": "postman description"
+}
+```
+
+Response:
+```
+{
+    "success": True
+}
+```
 
 #### List your tasks
 
+This endpoint returns all the tasks related to the logged in user.
 
+URL:
+```
+GET /tasks/list
+```
+
+Headers: 
+```
+{
+    "Content-Type": "application/json",
+    "Authorization": "xxxxx.yyyyy.zzzzz"
+}
+```
+
+Request body:
+```
+{}
+```
+
+Response:
+```
+[
+    {
+        "created_at": "Sat, 18 May 2024 13:56:02 GMT",
+        "status": "TO DO",
+        "task_pk": 3,
+        "title": "title1",
+        "updated_at": "Sat, 18 May 2024 19:54:45 GMT"
+    },
+    {
+        "created_at": "Sat, 18 May 2024 13:56:02 GMT",
+        "status": "TO DO",
+        "task_pk": 4,
+        "title": "title2",
+        "updated_at": "Sat, 18 May 2024 19:54:45 GMT"
+    }
+]
+```
 
 #### See a task's detail
 
+This endpoint returns the detail of the task specified in the <task_id> parameter.
 
+URL:
+```
+GET /tasks/<task_id>
+```
+
+Headers: 
+```
+{
+    "Content-Type": "application/json",
+    "Authorization": "xxxxx.yyyyy.zzzzz"
+}
+```
+
+Request body:
+```
+{}
+```
+
+Response:
+```
+{
+    "created_at": "Sat, 18 May 2024 13:56:02 GMT",
+    "deleted": 0,
+    "description": "description1 updated",
+    "status": "TO DO",
+    "task_pk": 4,
+    "title": "title1 updated",
+    "updated_at": "Sat, 18 May 2024 19:54:45 GMT"
+}
+```
 
 #### Update a task
 
+This endpoint changes the details of the task specified in the <task_id> parameter.
 
+URL:
+```
+PUT /tasks/<task_id>
+```
+
+Headers: 
+```
+{
+    "Content-Type": "application/json",
+    "Authorization": "xxxxx.yyyyy.zzzzz"
+}
+```
+
+Request body:
+```
+{
+    "deleted": 0,
+    "description": "description1 updated",
+    "status": "TO DO",
+    "title": "title1 updated"
+}
+```
+
+Response:
+```
+{
+    "created_at": "Sat, 18 May 2024 13:56:02 GMT",
+    "deleted": 0,
+    "description": "description1 updated",
+    "status": "TO DO",
+    "task_pk": 4,
+    "title": "title1 updated",
+    "updated_at": "Sat, 18 May 2024 19:54:45 GMT"
+}
+```
 
 #### Delete a task
 
+This endpoint deletes the task specified in the <task_id> parameter.
+
+URL:
+```
+DELETE /tasks/<task_id>
+```
+
+Headers: 
+```
+{
+    "Content-Type": "application/json",
+    "Authorization": "xxxxx.yyyyy.zzzzz"
+}
+```
+
+Request body:
+```
+{}
+```
+
+Response:
+```
+{
+    "success": True
+}
+```

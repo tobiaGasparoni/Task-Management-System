@@ -6,7 +6,7 @@ from flask import request
 
 from sqlalchemy import create_engine, text
 
-engine = create_engine("postgresql+psycopg2://postgres:postgres@localhost:5432/postgres", echo=True)
+engine = create_engine("postgresql+psycopg2://postgres:postgres@postgres:5432/postgres", echo=True)
 
 @tasks_blueprint.get('/')
 def index():
