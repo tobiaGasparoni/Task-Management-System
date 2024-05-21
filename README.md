@@ -44,7 +44,8 @@ URL:
 Headers: 
 ```{
     'Content-Type': 'application/json'
-}```
+}
+```
 
 Request body:
 ```{
@@ -52,7 +53,8 @@ Request body:
     "last_name": "Martinez",
     "email": "robert.martinez@gmail.com",
     "password": "password123again"
-}```
+}
+```
 
 #### Login
 
