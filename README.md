@@ -38,6 +38,8 @@ pip install -r requirements.txt
 
 #### Create a user
 
+This endpoint creates a user in the database.
+
 URL:
 ```
 POST /auth/signup
@@ -53,10 +55,10 @@ Headers:
 Request body:
 ```
 {
-    "first_name": "Robert",
-    "last_name": "Martinez",
-    "email": "robert.martinez@gmail.com",
-    "password": "password123again"
+    "first_name": "FirstName",
+    "last_name": "LastName",
+    "email": "firstname.lastname@gmail.com",
+    "password": "password12345"
 }
 ```
 
@@ -71,7 +73,7 @@ Response:
 
 #### Login
 
-This 
+This endpoint logs you into the system to access your tasks. The response is a JSON Web Token for you to use in every `/tasks` endpoint. This token will last 1 day.
 
 URL:
 ```
@@ -88,8 +90,8 @@ Headers:
 Request body:
 ```
 {
-    "email": "tobia.martinez@gmail.com",
-    "password": "password123again"
+    "email": "firstname.lastname@gmail.com",
+    "password": "password12345"
 }
 ```
 
@@ -104,9 +106,11 @@ Response:
 
 #### Update user
 
+This endpoint modifies the first name, last name, and email of a user.
+
 URL:
 ```
-POST /auth/login
+PUT /auth
 ```
 
 Headers: 
@@ -120,15 +124,16 @@ Headers:
 Request body:
 ```
 {
-    "email": "tobia.martinez@gmail.com",
-    "password": "password123again"
+    "first_name": "NewName",
+    "last_name": "NewLastName",
+    "email": "newname.newlastname@gmail.com"
 }
 ```
 
 Response:
 ```
 {
-    "jwt": "xxxxx.yyyyy.zzzzz"
+    "success": True
 }
 ```
 
