@@ -4,19 +4,14 @@ Using the application factory allows for the creation of flask applications conf
 for different environments based on the value of the CONFIG_TYPE environment variable
 """
 
-import os
 from flask import Flask
+from sqlalchemy import create_engine
 
 
 ### Application Factory ###
 def create_app():
 
     app = Flask(__name__)
-
-    # Configure the flask app instance
-    CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
-    app.config.from_object(CONFIG_TYPE)
-
 
     # Register blueprints
     register_blueprints(app)
@@ -35,11 +30,49 @@ def register_blueprints(app):
     from src.auth import auth_blueprint
     from src.tasks import tasks_blueprint
 
-    app.register_blueprint(auth_blueprint, url_prefix='/users')
-    app.register_blueprint(tasks_blueprint)
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    app.register_blueprint(tasks_blueprint, url_prefix='/tasks')
 
 def register_error_handlers(app):
-  pass
+    # 400 - Bad Request
+    @app.errorhandler(400)
+    def bad_request(e):
+        return {
+            'status': 400,
+            'error': str(e)
+        }
+
+    # 403 - Forbidden
+    @app.errorhandler(403)
+    def forbidden(e):
+        return {
+            'status': 403,
+            'error': str(e)
+        }
+
+    # 404 - Page Not Found
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return {
+            'status': 404,
+            'error': str(e)
+        }
+
+    # 405 - Method Not Allowed
+    @app.errorhandler(405)
+    def method_not_allowed(e):
+        return {
+            'status': 405,
+            'error': str(e)
+        }
+
+    # 500 - Internal Server Error
+    @app.errorhandler(500)
+    def server_error(e):
+        return {
+            'status': 500,
+            'error': str(e)
+        }
 
 
 def configure_logging(app):
