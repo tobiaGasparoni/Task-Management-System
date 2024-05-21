@@ -171,6 +171,8 @@ Response:
 }
 ```
 
+---
+
 #### List your tasks
 
 This endpoint returns all the tasks related to the logged in user.
@@ -213,6 +215,8 @@ Response:
 ]
 ```
 
+---
+
 #### See a task's detail
 
 This endpoint returns the detail of the task specified in the <task_id> parameter.
@@ -247,6 +251,8 @@ Response:
     "updated_at": "Sat, 18 May 2024 19:54:45 GMT"
 }
 ```
+
+---
 
 #### Update a task
 
@@ -287,6 +293,8 @@ Response:
     "updated_at": "Sat, 18 May 2024 19:54:45 GMT"
 }
 ```
+
+---
 
 #### Delete a task
 
