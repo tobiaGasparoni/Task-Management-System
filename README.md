@@ -42,13 +42,15 @@ URL:
 ```/auth/signup```
 
 Headers: 
-```{
+```
+{
     'Content-Type': 'application/json'
 }
 ```
 
 Request body:
-```{
+```
+{
     "first_name": "Robert",
     "last_name": "Martinez",
     "email": "robert.martinez@gmail.com",
