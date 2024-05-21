@@ -67,6 +67,8 @@ Response:
 }
 ```
 
+---
+
 #### Login
 
 This 
@@ -97,6 +99,8 @@ Response:
     "jwt": "xxxxx.yyyyy.zzzzz"
 }
 ```
+
+---
 
 #### Update user
 
