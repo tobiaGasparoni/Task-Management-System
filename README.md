@@ -38,18 +38,21 @@ pip install -r requirements.txt
 
 #### Create a user
 
-URL: /auth/signup
+URL:
+```/auth/signup```
 
-Headers: {
+Headers: 
+```{
     'Content-Type': 'application/json'
-}
+}```
 
-Request body: {
+Request body:
+```{
     "first_name": "Robert",
     "last_name": "Martinez",
     "email": "robert.martinez@gmail.com",
     "password": "password123again"
-}
+}```
 
 #### Login
 
