@@ -6,7 +6,7 @@ from flask import request
 from sqlalchemy import create_engine, text
 from src.middleware.token_required import token_required
 
-engine = create_engine("postgresql+psycopg2://postgres:postgres@localhost:5432/postgres", echo=True)
+engine = create_engine("postgresql+psycopg2://postgres:postgres@postgres:5432/postgres", echo=True)
 
 @auth_blueprint.route('/')
 def index():
@@ -54,6 +54,11 @@ def login():
 
     for row in rows:
         user_data = row._asdict()
+
+    if user_data is None:
+        return {
+            'message': 'Incorrect credentials: username and password are incorrect.'
+        }
 
     if user_data['password'] == hashed_password:
         jwt_processor = JWTProcessor()

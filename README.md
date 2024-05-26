@@ -1,5 +1,22 @@
 # Task-Management-System
 
+## Index
+
+1. Run Locally
+2. Integration Tests
+3. Unit Tests Setup
+4. API Guide
+   1. Authentication
+      1. Create a user
+      2. Login
+      3. Update user
+   2. Tasks
+      1. Create a task
+      2. List your tasks
+      3. See a task's detail
+      4. Update a task
+      5. Delete a task
+
 ## Run Locally
 
 `docker-compose up`
