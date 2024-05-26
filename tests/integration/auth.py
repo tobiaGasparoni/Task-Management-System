@@ -4,28 +4,28 @@ import pytest
 from sqlalchemy import create_engine, text
 
 
-user = 'postgres'
-password = 'postgres'
-host = 'localhost'
-port = '5432'
-database = 'postgres'
+USER = 'postgres'
+PASSWORD = 'postgres'
+HOST = 'localhost'
+PORT = '5432'
+DATABASE = 'postgres'
 
-db_engine = create_engine(f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}", echo=True)
+DB_ENGINE = create_engine(f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}", echo=True)
 
-auth_url = 'http://localhost:8000/auth'
+AUTH_URL = 'http://localhost:8000/auth'
 
 #####
 # Utils
 #####
 
 def execute_query(query):
-    with db_engine.connect() as connection:
+    with DB_ENGINE.connect() as connection:
         connection.execute(text(query))
         connection.commit()
 
 
 def execute_and_fetch_query(query):
-    with db_engine.connect() as connection:
+    with DB_ENGINE.connect() as connection:
         rows = connection.execute(text(query))
         connection.commit()
 
@@ -34,6 +34,10 @@ def execute_and_fetch_query(query):
         result.append(row._asdict())
 
     return result
+
+
+def empty_database():
+    execute_query('DELETE FROM users;')
 
 
 def create_user():
@@ -45,13 +49,7 @@ def create_user():
         "password": "password123again"
     }
 
-    return requests.post(auth_url, json=new_user)
-
-
-def empty_database():
-    with db_engine.connect() as connection:
-        connection.execute(text('DELETE FROM users;'))
-        connection.commit()
+    return requests.post(AUTH_URL, json=new_user)
 
 #####
 # Tests
@@ -60,7 +58,7 @@ def empty_database():
 def test_hello():
     expected = {'message':'Welcome to the auth section of the platform!'}
 
-    response = requests.get(auth_url)
+    response = requests.get(AUTH_URL)
     data = response.json()
     
     assert expected == data
@@ -87,7 +85,6 @@ def test_create_user():
 
 
 def test_login():
-
     assert create_user().json() == { "success": True }
 
     login_credentials = {
@@ -95,7 +92,7 @@ def test_login():
         "password": "password123again"
     }
 
-    response = requests.post(auth_url + '/login', json=login_credentials)
+    response = requests.post(AUTH_URL + '/login', json=login_credentials)
     data = response.json()
 
     json_web_token = data['jwt']
@@ -114,7 +111,7 @@ def test_update_user():
         "password": "password123again"
     }
 
-    response = requests.post(auth_url + '/login', json=login_credentials)
+    response = requests.post(AUTH_URL + '/login', json=login_credentials)
     json_web_token = response.json()['jwt']
 
     new_user_data = {
@@ -123,7 +120,7 @@ def test_update_user():
         "email": "tobia.martinez@gmail.com",
     }
 
-    response = requests.put(auth_url, json=new_user_data, headers={'Authorization': json_web_token})
+    response = requests.put(AUTH_URL, json=new_user_data, headers={'Authorization': json_web_token})
     assert response.json() == { "success": True }
 
     query = """SELECT * FROM users WHERE email='tobia.martinez@gmail.com';"""
