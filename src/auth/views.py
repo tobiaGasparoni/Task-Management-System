@@ -5,8 +5,11 @@ from . import auth_blueprint
 from flask import request
 from sqlalchemy import create_engine, text
 from src.middleware.token_required import token_required
+import redis
+
 
 engine = create_engine("postgresql+psycopg2://postgres:postgres@postgres:5432/postgres", echo=True)
+
 
 @auth_blueprint.route('/')
 def index():
@@ -38,6 +41,7 @@ def create_user():
     return {
         'success': True
     }
+
 
 @auth_blueprint.post('/login')
 def login():
@@ -74,9 +78,19 @@ def login():
         pass
 
 
-@auth_blueprint.get('/<id>')
-def logout():
-    pass
+@auth_blueprint.get('/logout')
+@token_required
+def logout(user):
+    jwt = user['jwt']
+
+    r = redis.Redis(host='redis', port=6379, decode_responses=True)
+
+    r.set(jwt, 1)
+
+    return {
+        'success': True
+    }
+
 
 @auth_blueprint.put('/')
 @token_required
@@ -104,6 +118,7 @@ def update_user(user):
     return {
         'success': True
     }
+
 
 @auth_blueprint.delete('/')
 def delete_user():

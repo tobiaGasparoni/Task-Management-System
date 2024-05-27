@@ -2,6 +2,7 @@ from urllib.request import urlopen
 import requests
 import pytest
 from sqlalchemy import create_engine, text
+import redis
 
 
 USER = 'postgres'
@@ -61,16 +62,14 @@ def test_hello():
     response = requests.get(AUTH_URL)
     data = response.json()
     
-    assert expected == data
+    assert data == expected
 
 
 def test_create_user():
-    expected = { "success": True }
-
     response = create_user()
     data = response.json()
     
-    assert expected == data
+    assert data == { "success": True }
 
     query = """SELECT * FROM users WHERE email='robert.martinez@gmail.com'"""
     users = execute_and_fetch_query(query)
@@ -130,5 +129,28 @@ def test_update_user():
     added_user = users[0]
     assert added_user['first_name'] == 'Tobia'
     assert added_user['last_name'] == 'Martinez'
+
+    empty_database()
+
+
+def test_logout_user():
+    assert create_user().json() == { "success": True }
+
+    login_credentials = {
+        "email": "robert.martinez@gmail.com",
+        "password": "password123again"
+    }
+
+    response = requests.post(AUTH_URL + '/login', json=login_credentials)
+    json_web_token = response.json()['jwt']
+
+    r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+    assert r.get(json_web_token) is None
+
+    response = requests.get(AUTH_URL + '/logout', headers={'Authorization': json_web_token})
+    assert response.json() == { "success": True }
+
+    cache_response = r.get(json_web_token)
+    assert int(cache_response) == 1
 
     empty_database()
