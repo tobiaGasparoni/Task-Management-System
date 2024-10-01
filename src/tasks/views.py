@@ -45,7 +45,7 @@ def list_tasks(user):
 def task_detail(user, task_pk):
     select_query, select_params = get_task_detail_query(task_pk)
 
-    result = execute_query(select_query, select_params)
+    result = execute_and_fetch_query(select_query, select_params)
 
     return result[0]
 
